@@ -2,7 +2,7 @@
 
 A simple Discord bot built as a learning project using Java. This bot demonstrates fundamental JDA (Java Discord API) concepts and provides a foundation for building more complex bots.
 
-There is a video tutorial that goes with this repository explaining every line of code in detail. You can find that at https://youtu.be/Whnl-5fXN5c
+There is a [video tutorial](https://youtu.be/Whnl-5fXN5c) that goes with this repository explaining every line of code in detail.
 
 ## Features
 
