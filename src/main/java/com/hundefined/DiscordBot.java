@@ -2,6 +2,7 @@ package com.hundefined;
 
 import com.hundefined.config.BotConfig;
 import com.hundefined.listeners.CommandListener;
+import com.hundefined.commands.Command;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -47,12 +48,26 @@ public class DiscordBot {
         }
 
         logger.info("Registering Slash Commands...");
+        
+        // Get command listener instance to access commands map
+        CommandListener commandListener = null;
+        for (Object listener : jda.getEventManager().getRegisteredListeners()) {
+            if (listener instanceof CommandListener) {
+                commandListener = (CommandListener) listener;
+                break;
+            }
+        }
+        
+        if (commandListener == null) {
+            logger.error("CommandListener not found. Cannot register slash commands.");
+            return;
+        }
+        
+        // Get command data from each command in the map
         jda.updateCommands()
-                .addCommands(
-                        Commands.slash("ping", "Checks the bot's latency to Discord's gateway."),
-                        Commands.slash("info", "Displays information about the bot."),
-                        Commands.slash("echo", "Responds back with your message")
-                                .addOption(OptionType.STRING, "text", "The text to echo", true))
+                .addCommands(commandListener.getCommands().values().stream()
+                        .map(Command::getCommandData)
+                        .toList())
                 .queue(success -> logger.info("Slash commands registered successfully!"),
                         failure -> logger.error("Failed to register slash commands: ", failure));
     }

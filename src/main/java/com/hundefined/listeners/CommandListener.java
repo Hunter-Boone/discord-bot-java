@@ -24,6 +24,16 @@ public class CommandListener extends ListenerAdapter {
         commands.put("echo", new EchoCommand());
         logger.info("Registered {} commands.", commands.size());
     }
+    
+    /**
+     * Returns the map of commands registered with this listener.
+     * Used by the slash command registration process.
+     *
+     * @return The map of command names to Command objects
+     */
+    public Map<String, Command> getCommands() {
+        return commands;
+    }
 
     @Override
     public void onReady(@NotNull ReadyEvent event) {

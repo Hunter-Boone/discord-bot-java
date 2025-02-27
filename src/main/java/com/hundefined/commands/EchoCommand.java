@@ -2,6 +2,9 @@ package com.hundefined.commands;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
 
 public class EchoCommand implements Command {
 
@@ -13,6 +16,12 @@ public class EchoCommand implements Command {
     @Override
     public String getDescription() {
         return "Echoes back the text you provide.";
+    }
+
+    @Override
+    public CommandData getCommandData() {
+        return Commands.slash(getName(), getDescription())
+                .addOption(OptionType.STRING, "text", "The text to echo", true);
     }
 
     @Override
